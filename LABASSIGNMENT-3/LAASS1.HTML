@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello World Button</title>
+</head>
+
+<body>
+
+<p>24BKT0164</p>
+<p>MD RAKHSHAN SAIF</p>
+
+<h2>Click the button to display message</h2>
+
+<button onclick="showMessage()">Click Me</button>
+
+<p id="demo"></p>
+
+<script>
+    var message = "Hello, world!";
+
+    function showMessage() {
+        document.getElementById("demo").outerHTML = "<h3>" + message + "</h3>";
+    }
+</script>
+
+</body>
+</html>
