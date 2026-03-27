@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Address Generator</title>
+</head>
+
+<body>
+
+<p>24BKT0164</p>
+<p>MD RAKHSHAN SAIF</p>
+
+<h2>Email Address Generator</h2>
+
+<form>
+    First Name: <input type="text" name="fname"><br><br>
+    Last Name: <input type="text" name="lname"><br><br>
+
+    <button type="button" onclick="generate(this.form)">Generate Email</button>
+</form>
+
+<p id="output"></p>
+
+<script>
+    function generate(form) {
+        var fname = form.elements["fname"].value;
+        var lname = form.elements["lname"].value;
+
+        var email = fname + "." + lname + "@park.edu";
+
+        document.getElementById("output").innerHTML = email;
+
+        form.reset();
+        form.elements["fname"].focus();
+    }
+</script>
+
+</body>
+</html>
