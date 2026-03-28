@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Overlapping Image Gallery</title>
+
+    <style>
+        .container {
+            position: relative;
+            width: 400px;
+            height: 300px;
+        }
+
+        img {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            cursor: pointer;
+        }
+
+        #img1 { top: 20px; left: 20px; }
+        #img2 { top: 60px; left: 80px; }
+        #img3 { top: 100px; left: 140px; }
+    </style>
+</head>
+
+<body>
+
+<p>24BKT0164</p>
+<p>MD RAKHSHAN SAIF</p>
+
+<h2>Overlapping Image Gallery</h2>
+
+<div class="container">
+    <img id="img1" src="https://picsum.photos/150?1" onclick="bringFront(this)">
+    <img id="img2" src="https://picsum.photos/150?2" onclick="bringFront(this)">
+    <img id="img3" src="https://picsum.photos/150?3" onclick="bringFront(this)">
+</div>
+
+<script>
+var topIndex = 1;
+
+function bringFront(element) {
+    element.style.zIndex = ++topIndex;
+}
+</script>
+
+</body>
+</html>
