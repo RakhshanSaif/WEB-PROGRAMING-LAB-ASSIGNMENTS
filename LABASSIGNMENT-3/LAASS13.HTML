@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Product Order Form</title>
+</head>
+
+<body>
+
+<p>24BKT0164</p>
+<p>MD RAKHSHAN SAIF</p>
+
+<h2>Order Products</h2>
+
+<form>
+
+<fieldset>
+<legend>Fruits</legend>
+<input type="checkbox" class="item" value="50"> Apple (50)<br>
+<input type="checkbox" class="item" value="30"> Banana (30)<br>
+</fieldset>
+
+<fieldset>
+<legend>Snacks</legend>
+<input type="checkbox" class="item" value="20"> Chips (20)<br>
+<input type="checkbox" class="item" value="40"> Cookies (40)<br>
+</fieldset>
+
+<fieldset>
+<legend>Drinks</legend>
+<input type="checkbox" class="item" value="25"> Juice (25)<br>
+<input type="checkbox" class="item" value="60"> Soda (60)<br>
+</fieldset>
+
+<br>
+<button type="button" onclick="calculateTotal()">Calculate Total</button>
+
+<p id="result"></p>
+
+</form>
+
+<script>
+function calculateTotal() {
+    var items = document.querySelectorAll(".item");
+    var total = 0;
+
+    for (var item of items) {
+        if (item.checked) {
+            total += parseFloat(item.value);
+        }
+    }
+
+    document.getElementById("result").innerHTML = "Total Price: " + total;
+}
+</script>
+
+</body>
+</html>
