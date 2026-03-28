@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Font Customization Tool</title>
+</head>
+
+<body>
+
+<p>24BKT0164</p>
+<p>MD RAKHSHAN SAIF</p>
+
+<h2>Font Customization Tool</h2>
+
+<fieldset>
+<legend>Customize Text</legend>
+
+Font Size:
+<input type="range" id="size" min="10" max="50" onchange="changeStyle()"><br><br>
+
+Text Color:
+<input type="color" id="color" onchange="changeStyle()"><br><br>
+
+Background Color:
+<input type="color" id="bg" onchange="changeStyle()"><br>
+
+</fieldset>
+
+<br>
+
+<p id="text">Customize this text</p>
+
+<script>
+function changeStyle() {
+    var size = document.getElementById("size").value;
+    var color = document.getElementById("color").value;
+    var bg = document.getElementById("bg").value;
+
+    var text = document.getElementById("text");
+
+    text.style.fontSize = size + "px";
+    text.style.color = color;
+    text.style.backgroundColor = bg;
+}
+</script>
+
+</body>
+</html>
