@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>React Welcome App</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
 
+<div id="root"></div>
+
+<script type="text/javascript">
+function Welcome(props) {
+  return React.createElement("div", {
+      style: {
+        textAlign: "center",
+        marginTop: "50px",
+        fontFamily: "Arial",
+        color: "darkblue"
+      }
+    },
+      React.createElement("h1", null, `Hello ${props.name}!`),
+      React.createElement("h2", null, `Welcome to ${props.city}`),
+      React.createElement("p", null, "This is a simple React app using props and functional components."),
+      React.createElement("div", { style: { marginTop: "20px", color: "black" } },
+        React.createElement("p", null, "24BKT0164"),
+        React.createElement("p", null, "MD RAKHSHAN SAIF")
+      )
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  React.createElement(Welcome, { name: "Rakhshan", city: "Chennai" })
+);
+</script>
+
+</body>
+</html>
