@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather Dashboard</title>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background-color: #e6f2ff;
+    }
+
+    .container {
+      width: 350px;
+      margin: 80px auto;
+      padding: 20px;
+      text-align: center;
+      background: white;
+      border-radius: 10px;
+    }
+
+    input {
+      padding: 10px;
+      width: 70%;
+      margin-right: 5px;
+    }
+
+    button {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .weather {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+const API_KEY = "3488b22ae0b66a4d7c1712dae38cc7c3";
+
+function Header() {
+  return <h1>Weather Dashboard</h1>;
+}
+
+function Search({ onSearch }) {
+  const [input, setInput] = React.useState("");
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Enter city"
+      />
+      <button onClick={() => onSearch(input)}>Search</button>
+    </div>
+  );
+}
+
+function Dashboard({ data }) {
+  if (!data) return null;
+
+  if (data.cod === "404" || data.cod === 404) {
+    return <p>City not found</p>;
+  }
+
+  return (
+    <div className="weather">
+      <h2>{data.name}</h2>
+      <p>Temperature: {data.main.temp} °C</p>
+      <p>Weather: {data.weather[0].description}</p>
+      <p>Humidity: {data.main.humidity}%</p>
+      <p>Wind Speed: {data.wind.speed} m/s</p>
+    </div>
+  );
+}
+
+function App() {
+  const [weather, setWeather] = React.useState(null);
+
+  const fetchWeather = (city) => {
+    if (!city) return;
+
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},IN&units=metric&appid=${API_KEY}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setWeather(data);
+      })
+      .catch(() => setWeather(null));
+  };
+
+  return (
+    <div className="container">
+      <Header />
+      <Search onSearch={fetchWeather} />
+      <Dashboard data={weather} />
+
+      <p>24BKT0164</p>
+      <p>MD RAKHSHAN SAIF</p>
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+
+</script>
+
+</body>
+</html>
