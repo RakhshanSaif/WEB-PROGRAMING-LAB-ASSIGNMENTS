@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Book Explorer</title>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      width: 90%;
+      margin: auto;
+      text-align: center;
+      padding: 20px;
+    }
+
+    input {
+      padding: 10px;
+      width: 60%;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .card {
+      width: 200px;
+      padding: 10px;
+      background: white;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+function fetchBooks(query) {
+  return fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`)
+    .then(res => res.json())
+    .then(data => data.items || []);
+}
+
+function Header() {
+  return <h1>Book Explorer</h1>;
+}
+
+function Search({ onSearch }) {
+  const [input, setInput] = React.useState("");
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Search books..."
+      />
+      <button onClick={() => onSearch(input)}>Search</button>
+    </div>
+  );
+}
+
+function BookCard({ book }) {
+  const info = book.volumeInfo;
+
+  return (
+    <div className="card">
+      <img src={info.imageLinks?.thumbnail || ""} />
+      <h3>{info.title}</h3>
+      <p>{info.authors?.join(", ")}</p>
+      <p>{info.publisher || "N/A"}</p>
+      <p>{info.publishedDate || "N/A"}</p>
+    </div>
+  );
+}
+
+function BookList({ books }) {
+  return (
+    <div className="grid">
+      {books.map((b, index) => (
+        <BookCard key={index} book={b} />
+      ))}
+    </div>
+  );
+}
+
+function App() {
+  const [books, setBooks] = React.useState([]);
+
+  const handleSearch = (query) => {
+    if (!query) return;
+
+    fetchBooks(query).then(result => setBooks(result));
+  };
+
+  return (
+    <div className="container">
+      <Header />
+      <Search onSearch={handleSearch} />
+      <BookList books={books} />
+
+      <p>24BKT0164</p>
+      <p>MD RAKHSHAN SAIF</p>
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+
+</script>
+
+</body>
+</html>
