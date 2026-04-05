@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Country Explorer</title>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      width: 90%;
+      margin: auto;
+      text-align: center;
+      padding: 20px;
+    }
+
+    input {
+      padding: 10px;
+      width: 60%;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .card {
+      width: 220px;
+      padding: 10px;
+      background: white;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+function fetchCountries(query) {
+  return fetch(`https://restcountries.com/v3.1/name/${query}`)
+    .then(res => res.json())
+    .then(data => Array.isArray(data) ? data : []);
+}
+
+function Header() {
+  return <h1>Country Explorer</h1>;
+}
+
+function Search({ onSearch }) {
+  const [input, setInput] = React.useState("");
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Enter country name..."
+      />
+      <button onClick={() => onSearch(input)}>Search</button>
+    </div>
+  );
+}
+
+function CountryCard({ country }) {
+  return (
+    <div className="card">
+      <img src={country.flags.png} />
+      <h3>{country.name.common}</h3>
+      <p>Capital: {country.capital ? country.capital[0] : "N/A"}</p>
+      <p>Population: {country.population}</p>
+      <p>Region: {country.region}</p>
+    </div>
+  );
+}
+
+function CountryList({ countries }) {
+  return (
+    <div className="grid">
+      {countries.map((c, index) => (
+        <CountryCard key={index} country={c} />
+      ))}
+    </div>
+  );
+}
+
+function App() {
+  const [countries, setCountries] = React.useState([]);
+
+  const handleSearch = (query) => {
+    if (!query) return;
+    fetchCountries(query).then(result => setCountries(result));
+  };
+
+  return (
+    <div className="container">
+      <Header />
+      <Search onSearch={handleSearch} />
+      <CountryList countries={countries} />
+
+      <p>24BKT0164</p>
+      <p>MD RAKHSHAN SAIF</p>
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+
+</script>
+
+</body>
+</html>
